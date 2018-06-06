@@ -1,0 +1,599 @@
+<?php
+$host="localhost";
+$db="denizci";
+$user="root";
+$pass="1234";
+$conn=@mysql_connect($host,$user,$pass) or die("Mysql Baglanamadi");
+
+mysql_select_db($db,$conn) or die("Veritabanina Baglanilamadi");
+
+?>
+
+<?php require('header.php'); ?>
+
+
+<?php require('popupheader.php'); ?>
+
+<p align="right"><button id="myBtn">Yardým</button></p>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p><?php require('sqlaciklama.php'); ?></p>
+  </div>
+
+</div>
+<?php require('popupfooter.php'); ?>
+
+
+<h1>SQL Injection</h1>
+
+
+<center>
+Sömürü için: ' OR ''='  SQL Injection Sömürü URL'si: http://localhost/login.php?kadi=' OR ''='&sifre=' OR ''='
+</center>
+<form action="login.php" method="GET">
+<table align="center">
+<tr>
+<td>Kullanýcý Adý</td>
+<td>:</td>
+<td><input type="text" name="kadi"></td>
+</tr>
+<tr>
+<td>Þifre</td>
+<td>:</td>
+<td><input type="password" name="sifre"></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><input type="submit" value="Giriþ"></td>
+</tr>
+</table>
+</form>
+
+
+
+
+
+<?php require('footer.php'); ?>
+
+
+<html>
+<?php require('header.php'); ?>
+
+
+
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Ziyaretçi Defteri - Mesaj Yaz
+</title>
+
+<style>
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
+
+
+</head>
+
+
+
+
+<body>
+
+
+
+
+
+
+<p align="right"><button id="myBtn">Yardým</button></p>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p><?php require('xssaciklama.php'); ?></p>
+  </div>
+
+</div>
+<?php require('popupfooter.php'); ?>
+
+
+<h1>Siteler Arasi Betik Calistirma - XSS</h1>
+
+
+
+
+<form name="frm_msj_kaydet" method="GET" action="msave.php">
+<table width="298" height="193" border="1">
+<tr>
+<td colspan="2" align="center">
+<b>Ziyaretçi Defteri - Mesaj Yaz
+</b>
+</td>
+</tr>
+<tr>
+<td> Ýsim:
+</td>
+<td>
+<input type="text" name="f_ad" />
+</td>
+</tr>
+
+<tr>
+<td>Mesaj
+</td>
+<td>
+<textarea name="f_mesaj">
+</textarea>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<input type="submit" name="button" value="Kaydet" />
+</td>
+</tr>
+</table>
+</form>
+
+
+
+
+
+<br><br><br>
+XSS Açýðý Örnekleri: <textarea rows="2" cols="50">
+<s cript>alert("XSS Açýðý Örneði")</script>
+
+ <IMG src= "resimurl">
+ https://image.flaticon.com/teams/new/1-freepik.jpg
+</textarea>
+<br><br><br>
+
+XSS Sömürü URL'si:  http://localhost/msave.php?f_ad=""&f_mesaj=""
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<?php
+
+include("sqlconnect.php");
+
+$sql    = "  SELECT * FROM ziyaretcidefteri "; 
+$result = mysql_query( $sql );
+
+echo "<table border=1>";
+echo "<tr>";    
+echo "<td><b>Ýsim</b></td>";
+echo "<td><b>Mesaj</b></td>";
+echo "<td><b>Zaman</b></td>";
+echo "</tr>";    
+while( $row = mysql_fetch_array($result) ) { 
+echo "<tr>";    
+echo "<td>".$row["isim"]."</td>";
+echo "<td>".$row["mesaj"]."</td>";
+echo "<td>".$row["tarih"]."</td>";
+echo "</tr>";    
+}  
+echo "</table>";
+
+
+
+?>
+<?php require('footer.php'); ?>
+</body>
+</html>
+
+
+<?php require('header.php'); ?>
+
+
+
+
+
+<?php
+// define variables and set to empty values
+$name =$dosyaadi="";
+
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+  $name = test_input($_GET["name"]);
+  $dosyaadi = test_input($_GET["dosyaadi"]);
+  $pingadresi = test_input($_GET["pingadresi"]);
+  
+  
+  
+}
+
+function test_input($data) {
+  
+  return $data;
+}
+?>
+
+<?php require('popupheader.php'); ?>
+
+<p align="right"><button id="myBtn">Yardým</button></p>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p><?php require('cominaciklama.php'); ?></p>
+  </div>
+
+</div>
+<?php require('popupfooter.php'); ?>
+
+
+<h1>Komut Enjeksiyonu</h1>
+
+
+
+
+
+
+
+
+
+
+Dosya Kaydetme için Sömürü URL:http://localhost/comin.php?name=""&dosyaadi=""|dir
+<br><br>
+
+<form method="GET" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
+  Yazý: <input type="text" name="name">
+  
+  <br><br>
+  Hedef Dosya Ýsmi: <input type="text" name="dosyaadi">
+<br><br>
+
+  
+  <input type="submit" name="submit" value="Kaydet">  
+</form>
+<br><br>
+
+
+
+
+<br><br>
+Ping Adresi için Sömürü URL: http://localhost/comin.php?pingadresi=localhost|dir
+<br><br>
+
+<form method="GET" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
+
+  Ping Gönder: <input type="text" name="pingadresi">
+  
+  <input type="submit" name="submit" value="Gönder">  
+</form>
+
+
+
+
+
+
+
+<?php
+exec("echo ".$name.">>".$dosyaadi."",$sonuc);
+
+exec("ping ".$pingadresi." ",$sonuc2);
+print_r($sonuc2);
+
+print_r($sonuc);
+
+
+
+?>
+<pre>
+
+
+
+
+
+<?php require('footer.php'); ?>
+
+
+<html>
+<body>
+<div id="footer">
+<p>
+<center>
+Oðuzhan YILMAZ-Dilara TAÞ
+</center>
+</p>
+</div>
+ 
+</body>
+ 
+</html>
+
+
+
+
+
+<?php require('header.php'); ?>
+
+
+<p align="right">
+<a href="sqlaciklama.php" target="_blank"><img src="img/info.png" alt="infopng" style="width:48px;height:48px;"></a>
+</p>
+
+
+<center>
+<img src="img/topsecret.png">
+</center>
+<?php require('footer.php'); ?>
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<style>
+body {
+    background-color: #d9d9d9;
+}
+</style>
+<style>
+<!– body {background-image: url("img/back.png");}–>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</style>
+<center>
+<img src="img/banner.png" alt="banner">
+</center>
+<style>
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #f3f3f3;
+	
+}
+
+li {
+    float: left;
+}
+
+li a, .dropbtn {
+    display: inline-block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+    background-color: #f9f9f9;
+}
+
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+</style>
+</head>
+<body>
+
+<ul>
+  <li><a href="index.php">Anasayfa</a></li>
+  <li><a href="kurulum.php">Kurulum</a></li>
+  <li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">Zaafiyetler</a>
+    <div class="dropdown-content">
+      <a href="sqlin.php">SQL Enjeksiyonu </a>
+      <a href="xss.php">Siteler Arasi Betik Calistirma - XSS</a>
+      <a href="comin.php">Komut Enjeksiyonu </a>
+    </div>
+  </li>
+</ul>
+
+
+</body>
+</html>
+
+
+
+
+<?php require('header.php'); ?>
+<br><br>
+
+Zayýf Web Uygulamasý kontrol mekanizmasý kuvvetli olmayan ve çeþitli yöntemlerle üçüncül kiþiler tarafýndan istenmeyen bilgi-veri akýþýnýn saðlanmasýný test eden bir uygulamadýr.
+<br>
+<br>
+Zaafiyetleri test etmek için ilgili sayfalara uðrayabilirsiniz.
+
+
+
+
+
+<?php require('footer.php'); ?>
+
+
+
+
+<?php require('header.php'); ?>
+<br><br>
+
+Zayýf Web Uygulamasý kontrol mekanizmasý kuvvetli olmayan ve çeþitli yöntemlerle üçüncül kiþiler tarafýndan istenmeyen bilgi-veri akýþýnýn saðlanmasýný test eden bir uygulamadýr.
+<br>
+<br>
+Zaafiyetleri test etmek için ilgili sayfalara uðrayabilirsiniz.
+
+
+
+
+
+<?php require('footer.php'); ?>
+
+
+
+<?php 
+
+include("sqlconnect.php");
+
+
+ob_start();
+session_start();
+
+$kadi = $_GET['kadi'];
+$sifre = $_GET['sifre'];
+
+$sql_check = mysql_query("select * from users where uname='".$kadi."' and upassword='".$sifre."' ") or die(mysql_error());
+
+if(mysql_num_rows($sql_check))  {
+    $_SESSION["login"] = "true";
+    $_SESSION["user"] = $kadi;
+    $_SESSION["pass"] = $sifre;
+	
+    header("Location:gizli.php");
+}
+else {
+	if($kadi=="" or $sifre=="") {
+		echo "<center>Lutfen kullanici adi ya da sifreyi bos birakmayiniz. <a href=javascript:history.back(-1)>Geri Don</a></center>";
+	}
+	else {
+		echo "<center>Kullanici Adi/Sifre Yanlis.<br><a href=javascript:history.back(-1)>Geri Don</a></center>";
+	}
+}
+
+ob_end_flush();
+?>
+
+
+
+
+<?php
+ob_start();
+// vt baðlantýsýný kuruyoruz.
+include("sqlconnect.php");
+// VT kayýt ekliyoruz.
+$sql = "insert into ziyaretcidefteri values ('".$_GET["f_ad"]."','".$_GET["f_mesaj"]."',NOW())";
+
+
+if ( mysql_query( $sql ) ){
+echo "<br>Mesajýnýz kaydedildi.<br>";
+header("Location: xss.php");
+} else {
+echo "<br>Hata oluþtu!";
+}
+ob_end_flush();
+?>
+
+
+
+<script>
+
+var modal = document.getElementById('myModal');
+var btn = document.getElementById("myBtn");
+var span = document.getElementsByClassName("close")[0];
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+span.onclick = function() {
+    modal.style.display = "none";
+}
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+
+
+
+<head>
+<style>
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
+</head>
